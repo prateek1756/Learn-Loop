@@ -1,6 +1,4 @@
 import { useState } from "react";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -19,8 +17,7 @@ export default function BookConsultation() {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <Header />
+    <>
       <main className="flex-1">
         <div className="bg-gradient-to-br from-green-50 via-emerald-50 to-background py-20">
           <div className="max-w-4xl mx-auto px-6 text-center">
@@ -269,7 +266,6 @@ export default function BookConsultation() {
           </div>
         </div>
       </main>
-      <Footer />
-    </div>
+    </>
   );
 }

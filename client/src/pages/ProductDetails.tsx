@@ -1,11 +1,10 @@
 import { useRoute } from "wouter";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ShoppingCart, ArrowLeft } from "lucide-react";
 import { Link } from "wouter";
+import { useCart } from "@/contexts/CartContext";
 
 export default function ProductDetails() {
   const [, params] = useRoute("/product/:id");
@@ -355,98 +354,96 @@ export default function ProductDetails() {
 
   const product = products[productId as keyof typeof products];
 
+  const { addToCart } = useCart();
+
+  const handleAddToCart = () => {
+    if (product) {
+      addToCart(product);
+    }
+  };
+
   if (!product) {
     return (
-      <div className="min-h-screen flex flex-col">
-        <Header />
-        <main className="flex-1 flex items-center justify-center">
-          <div className="text-center">
-            <h1 className="text-2xl font-bold mb-4">Product Not Found</h1>
-            <Link href="/">
-              <Button>Back to Home</Button>
-            </Link>
-          </div>
-        </main>
-        <Footer />
+      <div className="flex-1 flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold mb-4">Product Not Found</h1>
+          <Link href="/">
+            <Button>Back to Home</Button>
+          </Link>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <Header />
-      <main className="flex-1">
-        <div className="max-w-6xl mx-auto px-6 py-8">
-          <div className="animate-fade-in-up">
-            <Link href="/">
-              <Button variant="ghost" className="mb-8 hover:bg-primary/10">
-                <ArrowLeft className="h-4 w-4 mr-2" />
-                Back to Products
-              </Button>
-            </Link>
-          </div>
+    <div className="max-w-6xl mx-auto px-6 py-8">
+      <div className="animate-fade-in-up">
+        <Link href="/">
+          <Button variant="ghost" className="mb-8 hover:bg-primary/10">
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Back to Products
+          </Button>
+        </Link>
+      </div>
 
-          <div className="grid lg:grid-cols-2 gap-12 animate-fade-in-up" style={{animationDelay: '0.2s'}}>
-            <div>
-              <div className="aspect-square bg-muted rounded-lg flex items-center justify-center mb-6">
-                <div className="text-center text-muted-foreground">
-                  <div className="text-6xl mb-4">📱</div>
-                  <p>Product Image</p>
-                </div>
-              </div>
+      <div className="grid lg:grid-cols-2 gap-12 animate-fade-in-up" style={{animationDelay: '0.2s'}}>
+        <div>
+          <div className="aspect-square bg-muted rounded-lg flex items-center justify-center mb-6">
+            <div className="text-center text-muted-foreground">
+              <div className="text-6xl mb-4">📱</div>
+              <p>Product Image</p>
             </div>
-
-            <div>
-              <Badge variant="secondary" className="mb-4">{product.category}</Badge>
-              <h1 className="text-3xl font-bold mb-4">{product.name}</h1>
-              <div className="text-3xl font-bold text-primary mb-6">₹{product.price.toLocaleString()}</div>
-              
-              <p className="text-muted-foreground mb-6 leading-relaxed">{product.description}</p>
-
-              <div className="flex gap-4 mb-8">
-                <Button size="lg" className="flex-1">
-                  <ShoppingCart className="h-5 w-5 mr-2" />
-                  Add to Cart
-                </Button>
-                <Button size="lg" variant="outline">
-                  Contact Sales
-                </Button>
-              </div>
-
-              <Card>
-                <CardContent className="p-6">
-                  <h3 className="font-semibold mb-4">Key Features</h3>
-                  <ul className="space-y-2">
-                    {product.features.map((feature, index) => (
-                      <li key={index} className="flex items-start gap-2">
-                        <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                        <span className="text-sm">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-
-          <div className="mt-12">
-            <Card>
-              <CardContent className="p-6">
-                <h3 className="text-xl font-semibold mb-6">Specifications</h3>
-                <div className="grid md:grid-cols-2 gap-4">
-                  {Object.entries(product.specifications).map(([key, value]) => (
-                    <div key={key} className="flex justify-between py-2 border-b">
-                      <span className="font-medium">{key}</span>
-                      <span className="text-muted-foreground">{value}</span>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
           </div>
         </div>
-      </main>
-      <Footer />
+
+        <div>
+          <Badge variant="secondary" className="mb-4">{product.category}</Badge>
+          <h1 className="text-3xl font-bold mb-4">{product.name}</h1>
+          <div className="text-3xl font-bold text-primary mb-6">₹{product.price.toLocaleString()}</div>
+          
+          <p className="text-muted-foreground mb-6 leading-relaxed">{product.description}</p>
+
+          <div className="flex gap-4 mb-8">
+            <Button size="lg" className="flex-1" onClick={handleAddToCart}>
+              <ShoppingCart className="h-5 w-5 mr-2" />
+              Add to Cart
+            </Button>
+            <Button size="lg" variant="outline">
+              Contact Sales
+            </Button>
+          </div>
+
+          <Card>
+            <CardContent className="p-6">
+              <h3 className="font-semibold mb-4">Key Features</h3>
+              <ul className="space-y-2">
+                {product.features.map((feature, index) => (
+                  <li key={index} className="flex items-start gap-2">
+                    <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                    <span className="text-sm">{feature}</span>
+                  </li>
+                ))}
+              </ul>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+
+      <div className="mt-12">
+        <Card>
+          <CardContent className="p-6">
+            <h3 className="text-xl font-semibold mb-6">Specifications</h3>
+            <div className="grid md:grid-cols-2 gap-4">
+              {Object.entries(product.specifications).map(([key, value]) => (
+                <div key={key} className="flex justify-between py-2 border-b">
+                  <span className="font-medium">{key}</span>
+                  <span className="text-muted-foreground">{value}</span>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }

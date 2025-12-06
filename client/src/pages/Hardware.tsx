@@ -1,20 +1,10 @@
-import { useState } from "react";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import CartDrawer from "@/components/CartDrawer";
-import AuthDialog from "@/components/AuthDialog";
 import HardwareCategories from "@/components/HardwareCategories";
 import ProductCard from "@/components/ProductCard";
 import { useAuth } from "@/hooks/useAuth";
 import { useLocation } from "wouter";
-
-interface CartItem {
-  id: string;
-  name: string;
-  price: number;
-  quantity: number;
-  category: string;
-}
+import { useCart } from "@/contexts/CartContext";
+import { useState } from "react";
+import AuthDialog from "@/components/AuthDialog";
 
 const hardwareProducts = [
   {
@@ -86,9 +76,8 @@ const hardwareProducts = [
 export default function Hardware() {
   const [, setLocation] = useLocation();
   const { isAuthenticated } = useAuth();
-  const [cartOpen, setCartOpen] = useState(false);
   const [authDialogOpen, setAuthDialogOpen] = useState(false);
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const { addToCart } = useCart();
 
   const handleAddToCart = (productId: string) => {
     if (!isAuthenticated) {
@@ -97,106 +86,60 @@ export default function Hardware() {
     }
 
     const product = hardwareProducts.find(p => p.id === productId);
-    if (!product) return;
-
-    const existingItem = cartItems.find(item => item.id === productId);
-    
-    if (existingItem) {
-      setCartItems(cartItems.map(item =>
-        item.id === productId ? { ...item, quantity: item.quantity + 1 } : item
-      ));
-    } else {
-      setCartItems([...cartItems, { ...product, quantity: 1 }]);
+    if (product) {
+      addToCart(product);
     }
-    
-    setCartOpen(true);
-    console.log('Added to cart:', productId);
-  };
-
-  const handleUpdateQuantity = (id: string, quantity: number) => {
-    if (quantity < 1) return;
-    setCartItems(cartItems.map(item =>
-      item.id === id ? { ...item, quantity } : item
-    ));
-  };
-
-  const handleRemoveItem = (id: string) => {
-    setCartItems(cartItems.filter(item => item.id !== id));
-  };
-
-  const handleCheckout = () => {
-    console.log('Proceeding to checkout');
-    setLocation('/checkout');
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <Header 
-        cartCount={cartItems.reduce((sum, item) => sum + item.quantity, 0)}
-        onCartClick={() => setCartOpen(true)}
-        onSearchChange={(value) => console.log('Search:', value)}
+    <>
+      <div className="bg-gradient-to-br from-blue-50 via-indigo-50 to-background py-20">
+        <div className="max-w-7xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+          <div className="animate-fade-in-up">
+            <span className="inline-block px-4 py-2 bg-blue-100 text-blue-700 rounded-full text-sm font-medium mb-4">
+              🖥️ Hardware Solutions
+            </span>
+          </div>
+          <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent animate-fade-in-up" data-testid="text-page-heading" style={{animationDelay: '0.2s'}}>
+            Premium Hardware Equipment
+          </h1>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed animate-fade-in-up" style={{animationDelay: '0.4s'}}>
+            Transform your educational environment with cutting-edge hardware solutions designed for modern learning
+          </p>
+        </div>
+      </div>
+
+      <HardwareCategories 
+        onCategoryClick={(category) => console.log('Category clicked:', category)}
       />
-      
-      <main className="flex-1">
-        <div className="bg-gradient-to-br from-blue-50 via-indigo-50 to-background py-20">
-          <div className="max-w-7xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-            <div className="animate-fade-in-up">
-              <span className="inline-block px-4 py-2 bg-blue-100 text-blue-700 rounded-full text-sm font-medium mb-4">
-                🖥️ Hardware Solutions
-              </span>
-            </div>
-            <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent animate-fade-in-up" data-testid="text-page-heading" style={{animationDelay: '0.2s'}}>
-              Premium Hardware Equipment
-            </h1>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed animate-fade-in-up" style={{animationDelay: '0.4s'}}>
-              Transform your educational environment with cutting-edge hardware solutions designed for modern learning
+
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-background to-muted/20">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16 animate-fade-in-up">
+            <h2 className="text-4xl font-bold mb-6">Featured Hardware Products</h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+              Discover top-quality hardware solutions trusted by leading educational institutions worldwide
             </p>
           </div>
-        </div>
 
-        <HardwareCategories 
-          onCategoryClick={(category) => console.log('Category clicked:', category)}
-        />
-
-        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-background to-muted/20">
-          <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-16 animate-fade-in-up">
-              <h2 className="text-4xl font-bold mb-6">Featured Hardware Products</h2>
-              <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-                Discover top-quality hardware solutions trusted by leading educational institutions worldwide
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {hardwareProducts.map((product, index) => (
-                <div key={product.id} className="animate-fade-in-up" style={{animationDelay: `${0.1 * index}s`}}>
-                  <ProductCard
-                    {...product}
-                    onAddToCart={handleAddToCart}
-                    onViewDetails={(id) => setLocation(`/product/${id}`)}
-                  />
-                </div>
-              ))}
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {hardwareProducts.map((product, index) => (
+              <div key={product.id} className="animate-fade-in-up" style={{animationDelay: `${0.1 * index}s`}}>
+                <ProductCard
+                  {...product}
+                  onAddToCart={handleAddToCart}
+                  onViewDetails={(id) => setLocation(`/product/${id}`)}
+                />
+              </div>
+            ))}
           </div>
-        </section>
-      </main>
-
-      <Footer />
-
-      <CartDrawer
-        isOpen={cartOpen}
-        onClose={() => setCartOpen(false)}
-        items={cartItems}
-        onUpdateQuantity={handleUpdateQuantity}
-        onRemoveItem={handleRemoveItem}
-        onCheckout={handleCheckout}
-      />
+        </div>
+      </section>
 
       <AuthDialog
         isOpen={authDialogOpen}
         onClose={() => setAuthDialogOpen(false)}
       />
-    </div>
+    </>
   );
 }

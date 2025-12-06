@@ -1,16 +1,16 @@
 import { useState } from "react";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import CheckoutForm, { CheckoutData } from "@/components/CheckoutForm";
 import OrderConfirmation from "@/components/OrderConfirmation";
+import { useCart } from "@/contexts/CartContext";
 
 export default function Checkout() {
   const [orderPlaced, setOrderPlaced] = useState(false);
   const [orderData, setOrderData] = useState<{ orderNumber: string; email: string; total: number } | null>(null);
+  const { getTotalPrice, clearCart } = useCart();
 
   const handleSubmit = (data: CheckoutData) => {
     const orderNumber = `ORD-2025-${Math.floor(Math.random() * 999999).toString().padStart(6, '0')}`;
-    const total = 10997;
+    const total = getTotalPrice();
     
     console.log('Order submitted:', { ...data, orderNumber, total });
     
@@ -20,6 +20,7 @@ export default function Checkout() {
       total
     });
     setOrderPlaced(true);
+    clearCart();
   };
 
   const handleContinueShopping = () => {
@@ -27,27 +28,21 @@ export default function Checkout() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <Header cartCount={0} />
-      
-      <main className="flex-1 py-8">
-        {orderPlaced && orderData ? (
-          <OrderConfirmation
-            orderNumber={orderData.orderNumber}
-            customerEmail={orderData.email}
-            total={orderData.total}
-            onContinueShopping={handleContinueShopping}
-          />
-        ) : (
-          <CheckoutForm
-            total={9997}
-            onSubmit={handleSubmit}
-            onCancel={() => window.location.href = '/'}
-          />
-        )}
-      </main>
-
-      <Footer />
+    <div className="py-8">
+      {orderPlaced && orderData ? (
+        <OrderConfirmation
+          orderNumber={orderData.orderNumber}
+          customerEmail={orderData.email}
+          total={orderData.total}
+          onContinueShopping={handleContinueShopping}
+        />
+      ) : (
+        <CheckoutForm
+          total={getTotalPrice()}
+          onSubmit={handleSubmit}
+          onCancel={() => window.location.href = '/'}
+        />
+      )}
     </div>
   );
 }

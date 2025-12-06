@@ -1,13 +1,11 @@
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { BookOpen, Code, Video, Download, Search, Users } from "lucide-react";
 
 export default function Documentation() {
   return (
-    <div className="min-h-screen flex flex-col">
-      <Header />
+    <>
       <main className="flex-1">
         <div className="bg-gradient-to-b from-primary/5 to-background py-16">
           <div className="max-w-6xl mx-auto px-6">
@@ -96,7 +94,6 @@ export default function Documentation() {
           </div>
         </div>
       </main>
-      <Footer />
-    </div>
+    </>
   );
 }

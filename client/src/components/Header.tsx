@@ -1,141 +1,128 @@
-import { ShoppingCart, Search, GraduationCap, LogOut, User } from "lucide-react";
+import { useState } from "react";
+import { GraduationCap, ShoppingCart, Search, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Link } from "wouter";
-import { useAuth } from "@/hooks/useAuth";
+import { useLocation } from "wouter";
 
 interface HeaderProps {
-  cartCount?: number;
-  onCartClick?: () => void;
-  onSearchChange?: (value: string) => void;
+  cartCount: number;
+  onCartClick: () => void;
+  onSearchChange: (value: string) => void;
 }
 
-export default function Header({ cartCount = 0, onCartClick, onSearchChange }: HeaderProps) {
-  const { user, isAuthenticated } = useAuth();
+export default function Header({ cartCount, onCartClick, onSearchChange }: HeaderProps) {
+  const [, setLocation] = useLocation();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
 
-  const handleLogout = () => {
-    window.location.href = "/api/logout";
+  const handleSearchChange = (value: string) => {
+    setSearchValue(value);
+    onSearchChange(value);
   };
 
-  const handleLogin = () => {
-    window.location.href = "/api/login";
-  };
-
-  const getUserInitials = () => {
-    if (user?.firstName && user?.lastName) {
-      return `${user.firstName[0]}${user.lastName[0]}`.toUpperCase();
-    }
-    if (user?.email) {
-      return user.email[0].toUpperCase();
-    }
-    return "U";
-  };
+  const navigation = [
+    { name: "Home", href: "/" },
+    { name: "Software", href: "/software" },
+    { name: "Hardware", href: "/hardware" },
+    { name: "Services", href: "/services" },
+    { name: "Training", href: "/training" },
+    { name: "Contact", href: "/contact" },
+  ];
 
   return (
-    <header className="sticky top-0 z-50 bg-background border-b">
+    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 gap-4">
-          <Link href="/" className="flex items-center gap-2 hover-elevate active-elevate-2 rounded-md px-2 -ml-2 py-1" data-testid="link-home">
-            <GraduationCap className="h-8 w-8 text-primary" data-testid="icon-logo" />
-            <span className="text-xl font-bold" data-testid="text-brand">EduTech Store</span>
-          </Link>
+        <div className="flex h-16 items-center justify-between">
+          {/* Logo */}
+          <div className="flex items-center gap-2 cursor-pointer" onClick={() => setLocation("/")}>
+            <GraduationCap className="h-8 w-8 text-primary" />
+            <span className="text-xl font-bold">EduTech Store</span>
+          </div>
 
-          <nav className="hidden md:flex items-center gap-1">
-            <Link href="/software">
-              <Button variant="ghost" data-testid="link-software">
-                Software
-              </Button>
-            </Link>
-            <Link href="/hardware">
-              <Button variant="ghost" data-testid="link-hardware">
-                Hardware
-              </Button>
-            </Link>
-            <Link href="/services">
-              <Button variant="ghost" data-testid="link-services">
-                Services
-              </Button>
-            </Link>
-            <Link href="/training">
-              <Button variant="ghost" data-testid="link-training">
-                Training
-              </Button>
-            </Link>
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center space-x-8">
+            {navigation.map((item) => (
+              <button
+                key={item.name}
+                onClick={() => setLocation(item.href)}
+                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+              >
+                {item.name}
+              </button>
+            ))}
           </nav>
 
-          <div className="hidden md:flex flex-1 max-w-md mx-8">
-            <div className="relative w-full">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          {/* Search Bar */}
+          <div className="hidden md:flex items-center space-x-4">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
-                type="search"
+                type="text"
                 placeholder="Search products..."
-                className="pl-10"
-                onChange={(e) => onSearchChange?.(e.target.value)}
-                data-testid="input-search"
+                value={searchValue}
+                onChange={(e) => handleSearchChange(e.target.value)}
+                className="pl-10 w-64"
               />
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          {/* Cart and Mobile Menu */}
+          <div className="flex items-center space-x-4">
             <Button
               variant="outline"
-              size="icon"
-              className="relative hover:bg-primary hover:text-primary-foreground border-primary/20"
+              size="sm"
               onClick={onCartClick}
-              data-testid="button-cart"
+              className="relative"
             >
-              <ShoppingCart className="h-5 w-5" />
+              <ShoppingCart className="h-4 w-4" />
               {cartCount > 0 && (
-                <Badge
-                  className="absolute -top-1 -right-1 h-5 min-w-5 flex items-center justify-center p-1 text-xs"
-                  variant="destructive"
-                  data-testid="badge-cart-count"
-                >
+                <span className="absolute -top-2 -right-2 h-5 w-5 rounded-full bg-primary text-primary-foreground text-xs flex items-center justify-center">
                   {cartCount}
-                </Badge>
+                </span>
               )}
             </Button>
 
-            {isAuthenticated && user ? (
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="relative h-9 w-9 rounded-full" data-testid="button-user-menu">
-                    <Avatar className="h-9 w-9">
-                      <AvatarImage src={user.profileImageUrl || undefined} alt={user.email || "User"} style={{ objectFit: "cover" }} />
-                      <AvatarFallback>{getUserInitials()}</AvatarFallback>
-                    </Avatar>
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-56">
-                  <DropdownMenuLabel data-testid="text-user-email">
-                    {user.email || "User Account"}
-                  </DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={handleLogout} data-testid="button-logout">
-                    <LogOut className="mr-2 h-4 w-4" />
-                    <span>Log out</span>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            ) : (
-              <Link href="/login">
-                <Button className="bg-primary text-primary-foreground hover:bg-primary/90" data-testid="button-login">
-                  Sign In/Sign Up
-                </Button>
-              </Link>
-            )}
+            {/* Mobile menu button */}
+            <Button
+              variant="ghost"
+              size="sm"
+              className="md:hidden"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              {isMenuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+            </Button>
           </div>
         </div>
+
+        {/* Mobile Navigation */}
+        {isMenuOpen && (
+          <div className="md:hidden border-t py-4">
+            <div className="flex flex-col space-y-4">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Input
+                  type="text"
+                  placeholder="Search products..."
+                  value={searchValue}
+                  onChange={(e) => handleSearchChange(e.target.value)}
+                  className="pl-10"
+                />
+              </div>
+              {navigation.map((item) => (
+                <button
+                  key={item.name}
+                  onClick={() => {
+                    setLocation(item.href);
+                    setIsMenuOpen(false);
+                  }}
+                  className="text-left text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  {item.name}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </header>
   );

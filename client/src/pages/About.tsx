@@ -1,5 +1,4 @@
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -7,8 +6,7 @@ import { GraduationCap, Users, Award, Globe, Target, Heart, Zap } from "lucide-r
 
 export default function About() {
   return (
-    <div className="min-h-screen flex flex-col">
-      <Header />
+    <>
       <main className="flex-1">
         {/* Hero Section */}
         <div className="bg-gradient-to-br from-primary/10 via-primary/5 to-background py-20">
@@ -145,7 +143,6 @@ export default function About() {
           </div>
         </div>
       </main>
-      <Footer />
-    </div>
+    </>
   );
 }
