@@ -1,8 +1,8 @@
-# 🎓 EduTech Store - Educational Technology E-Commerce Platform
+# 🎓 Learn-Loop - Educational Technology E-Commerce Platform
 
 > **Empowering Education Through Technology**
 
-A modern, full-stack e-commerce platform designed specifically for educational institutions to discover, purchase, and implement cutting-edge technology solutions.
+A modern, full-stack e-commerce platform designed for educational institutions to discover, purchase, and implement cutting-edge technology solutions.
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Node](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen.svg)
@@ -10,188 +10,135 @@ A modern, full-stack e-commerce platform designed specifically for educational i
 
 ## ✨ Features
 
-### 🛒 **E-Commerce Core**
-- **Product Catalog** - Comprehensive hardware & software listings
-- **Smart Search** - Advanced filtering and categorization
-- **Shopping Cart** - Seamless cart management with quantity controls
-- **Secure Checkout** - Stripe-powered payment processing
-- **Order Management** - Complete order tracking and history
+### 🛒 E-Commerce Core
+- Product catalog with hardware & software listings
+- Advanced search and filtering
+- Shopping cart with quantity controls
+- Stripe-powered secure checkout
+- Order tracking and history
 
-### 🎯 **Educational Focus**
-- **Institution-Specific** - Tailored for schools, colleges & universities
-- **Bulk Pricing** - Special rates for educational purchases
-- **Category Organization** - Hardware, Software, Services & Training
-- **Compliance Ready** - Educational procurement standards
+### 🎯 Educational Focus
+- Tailored for schools, colleges & universities
+- Bulk pricing for institutional purchases
+- Category organization (Hardware, Software, Services, Training)
+- Educational procurement compliance
 
-### 🔐 **Authentication & Security**
-- **Replit Auth Integration** - Secure user authentication
-- **Session Management** - Persistent user sessions
-- **Role-Based Access** - Different access levels for users
+### 🔐 Security
+- Secure user authentication
+- Session management
+- Role-based access control
 
-### 📱 **Modern UI/UX**
-- **Responsive Design** - Mobile-first approach
-- **Dark/Light Mode** - Theme switching capability
-- **Accessibility** - WCAG compliant interface
-- **Modern Components** - Radix UI + Tailwind CSS
+### 📱 Modern UI/UX
+- Responsive mobile-first design
+- Dark/Light mode support
+- WCAG compliant accessibility
+- Radix UI + Tailwind CSS components
 
 ## 🚀 Tech Stack
 
-### **Frontend**
-- **React 18** - Modern React with hooks
-- **TypeScript** - Type-safe development
-- **Vite** - Lightning-fast build tool
-- **Tailwind CSS** - Utility-first styling
-- **Radix UI** - Accessible component library
-- **Wouter** - Lightweight routing
-- **TanStack Query** - Server state management
+**Frontend:**
+- React 18 with TypeScript
+- Vite build tool
+- Tailwind CSS + Radix UI
+- Wouter routing
+- TanStack Query
 
-### **Backend**
-- **Express.js** - Node.js web framework
-- **TypeScript** - Full-stack type safety
-- **PostgreSQL** - Robust relational database
-- **Drizzle ORM** - Type-safe database operations
-- **Replit Auth** - Authentication service
+**Backend:**
+- Express.js + TypeScript
+- PostgreSQL database
+- Drizzle ORM
+- Stripe payments
 
-### **Payment & Services**
-- **Stripe** - Payment processing
-- **Neon Database** - Serverless PostgreSQL
+## 📦 Installation
 
-## 🚀 Live Demo
+```bash
+# Clone repository
+git clone https://github.com/prateek1756/Learn-Loop.git
+cd Learn-Loop
 
-Experience EduTech Store in action:
+# Install dependencies
+npm install
 
-- **Vercel**: [https://edutech-store.vercel.app](https://edutech-store.vercel.app)
-- **Netlify**: [https://edutech-store.netlify.app](https://edutech-store.netlify.app)
+# Setup environment variables
+cp .env.example .env
 
-### 🔧 Technology Highlights
+# Push database schema
+npm run db:push
 
-- **Frontend**: React 18 with TypeScript for type-safe development
-- **Styling**: Tailwind CSS with Radix UI for modern, accessible components
-- **State Management**: TanStack Query for efficient server state management
-- **Routing**: Wouter for lightweight client-side routing
-- **Payments**: Stripe integration for secure transactions
-- **Database**: PostgreSQL with Drizzle ORM for type-safe database operations
+# Start development server
+npm run dev
+```
 
-## 🎯 About the Project
+## 🔧 Environment Variables
 
-EduTech Store is a comprehensive e-commerce platform specifically designed for educational institutions to streamline their technology procurement process. Built with modern web technologies, it provides a seamless shopping experience for schools, colleges, and universities looking to purchase educational technology solutions.
+Create a `.env` file:
 
-### 🌟 Why EduTech Store?
+```env
+DATABASE_URL=your_postgresql_url
+STRIPE_SECRET_KEY=your_stripe_secret_key
+STRIPE_PUBLISHABLE_KEY=your_stripe_publishable_key
+SESSION_SECRET=your_session_secret
+```
 
-- **Educational Focus**: Unlike generic e-commerce platforms, we understand the unique needs of educational institutions
-- **Bulk Pricing**: Special educational discounts and volume pricing for institutional purchases
-- **Compliance Ready**: Built to meet educational procurement standards and requirements
-- **Modern Technology**: Leverages cutting-edge web technologies for optimal performance and user experience
-- **Secure Payments**: Integrated with Stripe for secure and reliable payment processing
-- **Indian Market**: Prices in Indian Rupees (₹) to serve the Indian educational sector
+## 📜 Available Scripts
+
+```bash
+npm run dev          # Start development server
+npm run build        # Build for production
+npm run start        # Start production server
+npm run check        # TypeScript type checking
+npm run db:push      # Push database schema
+```
 
 ## 🏗️ Project Structure
 
 ```
-EduTech Store/
-├── client/                 # React frontend
+Learn-Loop/
+├── client/              # React frontend
 │   ├── src/
-│   │   ├── components/     # Reusable UI components
-│   │   │   ├── ui/        # Base UI components (Radix)
-│   │   │   └── examples/  # Example components
-│   │   ├── pages/         # Route components
-│   │   ├── hooks/         # Custom React hooks
-│   │   └── lib/           # Utilities & configurations
-├── server/                # Express backend
-│   ├── db.ts             # Database connection
-│   ├── routes.ts         # API routes
-│   ├── replitAuth.ts     # Authentication logic
-│   └── index.ts          # Server entry point
-├── shared/               # Shared types & schemas
-│   └── schema.ts         # Database & validation schemas
-├── vercel.json           # Vercel deployment config
+│   │   ├── components/  # UI components
+│   │   ├── pages/       # Route pages
+│   │   ├── hooks/       # Custom hooks
+│   │   └── lib/         # Utilities
+├── server/              # Express backend
+│   ├── db.ts           # Database connection
+│   ├── routes.ts       # API routes
+│   └── index.ts        # Server entry
+├── shared/             # Shared types
+│   └── schema.ts       # Database schemas
 └── README.md
-```
-
-## 🛠️ Available Scripts
-
-```bash
-# Development
-npm run dev          # Start development server
-npm run build        # Build for production
-npm run start        # Start production server
-npm run vercel-build # Build for Vercel deployment
-
-# Database
-npm run db:push      # Push schema changes to database
-
-# Code Quality
-npm run check        # TypeScript type checking
 ```
 
 ## 🌟 Key Pages
 
-- **🏠 Home** - Hero section, featured products, categories
-- **💻 Software** - Educational software catalog
-- **🖥️ Hardware** - Technology hardware listings  
-- **🛒 Checkout** - Secure payment processing
-- **📚 Training** - Educational training programs
-- **🔧 Services** - Installation & support services
-- **📞 Contact** - Customer support & information
-- **📖 Documentation** - User guides & API docs
+- **Home** - Hero section, featured products, categories
+- **Software** - Educational software catalog
+- **Hardware** - Technology hardware listings
+- **Training** - Professional development programs
+- **Services** - Installation & support
+- **Checkout** - Secure payment processing
 
 ## 💰 Currency
 
-All prices are displayed in **Indian Rupees (₹)** to serve the Indian educational market.
-
-## 🎨 Design System
-
-- **Colors** - Primary blue theme with educational focus
-- **Typography** - Inter font family for readability
-- **Components** - Consistent design language
-- **Responsive** - Mobile-first responsive design
-- **Accessibility** - WCAG 2.1 AA compliant
-
-## 🚀 Deployment
-
-### Vercel (Recommended)
-1. Fork this repository
-2. Connect to Vercel
-3. Set environment variables
-4. Deploy automatically
-
-### Manual Deployment
-```bash
-npm run build
-npm run start
-```
+All prices displayed in **Indian Rupees (₹)** for the Indian educational market.
 
 ## 🤝 Contributing
 
 1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+2. Create feature branch (`git checkout -b feature/amazing-feature`)
 3. Commit changes (`git commit -m 'Add amazing feature'`)
 4. Push to branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+5. Open Pull Request
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-- **Radix UI** - For accessible component primitives
-- **Tailwind CSS** - For utility-first styling
-- **Stripe** - For secure payment processing
-- **Replit** - For authentication services
+This project is licensed under the MIT License.
 
 ## 📞 Support
 
-- **Email**: info@edutechstore.com
-- **Documentation**: [View Docs](/documentation)
-- **Issues**: [GitHub Issues](https://github.com/prateek1756/BV-Labs/issues)
+- **Email**: info@learnloop.com
+- **Issues**: [GitHub Issues](https://github.com/prateek1756/Learn-Loop/issues)
 
 ---
 
-<div align="center">
-
 **Built with ❤️ for Education**
-
-[Live Demo](https://edutech-store.vercel.app) • [Documentation](/documentation) • [Report Bug](https://github.com/prateek1756/BV-Labs/issues)
-
-</div>
