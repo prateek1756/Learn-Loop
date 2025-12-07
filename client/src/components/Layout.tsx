@@ -5,6 +5,7 @@ import CartDrawer from '@/components/CartDrawer';
 import AuthDialog from '@/components/AuthDialog';
 import { useCart } from '@/contexts/CartContext';
 import { useState } from 'react';
+import { useLocation } from 'wouter';
 
 interface LayoutProps {
   children: ReactNode;
@@ -13,13 +14,20 @@ interface LayoutProps {
 export default function Layout({ children }: LayoutProps) {
   const { cartItems, cartOpen, setCartOpen, getTotalItems, updateQuantity, removeItem, checkout } = useCart();
   const [authDialogOpen, setAuthDialogOpen] = useState(false);
+  const [, setLocation] = useLocation();
+
+  const handleSearch = (query: string) => {
+    if (query.trim()) {
+      setLocation(`/search?q=${encodeURIComponent(query)}`);
+    }
+  };
 
   return (
     <div className="min-h-screen flex flex-col">
       <Header 
         cartCount={getTotalItems()}
         onCartClick={() => setCartOpen(true)}
-        onSearchChange={(value) => console.log('Search:', value)}
+        onSearchChange={handleSearch}
       />
       
       <main className="flex-1">

@@ -23,6 +23,7 @@ import ScheduleInstallation from "@/pages/ScheduleInstallation";
 import ExploreServices from "@/pages/ExploreServices";
 import BookConsultation from "@/pages/BookConsultation";
 import MaintenanceSupport from "@/pages/MaintenanceSupport";
+import SearchResults from "@/pages/SearchResults";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -47,6 +48,7 @@ function Router() {
         <Route path="/explore-services" component={ExploreServices} />
         <Route path="/book-consultation" component={BookConsultation} />
         <Route path="/maintenance-support" component={MaintenanceSupport} />
+        <Route path="/search" component={SearchResults} />
         <Route component={NotFound} />
       </Switch>
     </Layout>

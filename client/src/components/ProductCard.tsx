@@ -8,6 +8,7 @@ interface ProductCardProps {
   description: string;
   price: number;
   category: string;
+  image?: string;
   inStock: boolean;
   onAddToCart: (id: string) => void;
   onViewDetails: (id: string) => void;
@@ -19,12 +20,22 @@ export default function ProductCard({
   description,
   price,
   category,
+  image,
   inStock,
   onAddToCart,
   onViewDetails,
 }: ProductCardProps) {
   return (
-    <Card className="h-full flex flex-col">
+    <Card className="h-full flex flex-col overflow-hidden">
+      {image && (
+        <div className="w-full h-48 overflow-hidden bg-muted">
+          <img 
+            src={image} 
+            alt={name} 
+            className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+          />
+        </div>
+      )}
       <CardHeader>
         <div className="flex justify-between items-start mb-2">
           <Badge variant="secondary">{category}</Badge>

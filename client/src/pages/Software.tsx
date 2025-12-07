@@ -10,6 +10,7 @@ const softwareProducts = [
     description: "Complete solution for admissions, fees, exams, and payroll management",
     price: 4999,
     category: "Admin & Management",
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400",
     inStock: true,
   },
   {
@@ -18,6 +19,7 @@ const softwareProducts = [
     description: "Advanced LMS with online classes, quizzes, and content management",
     price: 3499,
     category: "Teaching & Learning",
+    image: "https://images.unsplash.com/photo-1501504905252-473c47e087f8?w=400",
     inStock: true,
   },
   {
@@ -26,6 +28,7 @@ const softwareProducts = [
     description: "Comprehensive SIS for tracking student records and performance",
     price: 3499,
     category: "Student Support",
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400",
     inStock: true,
   },
   {
@@ -34,6 +37,7 @@ const softwareProducts = [
     description: "Streamlined HR management and automated payroll processing",
     price: 2999,
     category: "Faculty & Staff",
+    image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400",
     inStock: true,
   },
   {
@@ -42,6 +46,7 @@ const softwareProducts = [
     description: "Interactive virtual labs for science and engineering courses",
     price: 2499,
     category: "Teaching & Learning",
+    image: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=400",
     inStock: true,
   },
   {
@@ -50,6 +55,7 @@ const softwareProducts = [
     description: "Digital cataloging, circulation, and resource management",
     price: 1999,
     category: "Campus Management",
+    image: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=400",
     inStock: true,
   },
 ];

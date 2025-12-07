@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { GraduationCap, ShoppingCart, Search, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,14 +10,73 @@ interface HeaderProps {
   onSearchChange: (value: string) => void;
 }
 
+const allProducts = [
+  { id: "h1", name: "Smart Interactive Whiteboard", category: "Classroom Devices" },
+  { id: "h2", name: "VR Learning Kit", category: "Learning Labs" },
+  { id: "h3", name: "Enterprise Server Rack", category: "IT Infrastructure" },
+  { id: "h4", name: "RFID Access Control System", category: "Security Systems" },
+  { id: "h5", name: "3D Printer Pro", category: "Learning Labs" },
+  { id: "h6", name: "Solar Power System", category: "Power & Backup" },
+  { id: "h7", name: "Smart Projector 4K", category: "Classroom Devices" },
+  { id: "h8", name: "CCTV Security Package", category: "Security Systems" },
+  { id: "s1", name: "Campus Management ERP", category: "Admin & Management" },
+  { id: "s2", name: "Learning Management System", category: "Teaching & Learning" },
+  { id: "s3", name: "Student Information System", category: "Student Support" },
+  { id: "s4", name: "HR & Payroll Software", category: "Faculty & Staff" },
+  { id: "s5", name: "Virtual Lab Platform", category: "Teaching & Learning" },
+  { id: "s6", name: "Library Management System", category: "Campus Management" },
+];
+
 export default function Header({ cartCount, onCartClick, onSearchChange }: HeaderProps) {
   const [, setLocation] = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("");
+  const [suggestions, setSuggestions] = useState<typeof allProducts>([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const searchRef = useRef<HTMLDivElement>(null);
 
-  const handleSearchChange = (value: string) => {
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
+        setShowSuggestions(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const handleSearchInput = (value: string) => {
     setSearchValue(value);
-    onSearchChange(value);
+    if (value.trim()) {
+      const filtered = allProducts.filter(p =>
+        p.name.toLowerCase().includes(value.toLowerCase()) ||
+        p.category.toLowerCase().includes(value.toLowerCase())
+      ).slice(0, 5);
+      setSuggestions(filtered);
+      setShowSuggestions(true);
+    } else {
+      setSuggestions([]);
+      setShowSuggestions(false);
+    }
+  };
+
+  const handleSearchSubmit = () => {
+    if (searchValue.trim()) {
+      onSearchChange(searchValue);
+      setShowSuggestions(false);
+    }
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      handleSearchSubmit();
+    }
+  };
+
+  const handleSuggestionClick = (productId: string) => {
+    setLocation(`/product/${productId}`);
+    setSearchValue("");
+    setShowSuggestions(false);
   };
 
   const navigation = [
@@ -54,15 +113,30 @@ export default function Header({ cartCount, onCartClick, onSearchChange }: Heade
 
           {/* Search Bar */}
           <div className="hidden md:flex items-center space-x-4">
-            <div className="relative">
+            <div className="relative" ref={searchRef}>
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
                 type="text"
                 placeholder="Search products..."
                 value={searchValue}
-                onChange={(e) => handleSearchChange(e.target.value)}
+                onChange={(e) => handleSearchInput(e.target.value)}
+                onKeyPress={handleKeyPress}
                 className="pl-10 w-64"
               />
+              {showSuggestions && suggestions.length > 0 && (
+                <div className="absolute top-full mt-2 w-full bg-background border rounded-md shadow-lg z-50">
+                  {suggestions.map((product) => (
+                    <div
+                      key={product.id}
+                      onClick={() => handleSuggestionClick(product.id)}
+                      className="px-4 py-2 hover:bg-muted cursor-pointer border-b last:border-b-0"
+                    >
+                      <div className="font-medium text-sm">{product.name}</div>
+                      <div className="text-xs text-muted-foreground">{product.category}</div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
 
@@ -104,7 +178,8 @@ export default function Header({ cartCount, onCartClick, onSearchChange }: Heade
                   type="text"
                   placeholder="Search products..."
                   value={searchValue}
-                  onChange={(e) => handleSearchChange(e.target.value)}
+                  onChange={(e) => setSearchValue(e.target.value)}
+                  onKeyPress={handleKeyPress}
                   className="pl-10"
                 />
               </div>

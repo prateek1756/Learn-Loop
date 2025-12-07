@@ -13,6 +13,7 @@ const hardwareProducts = [
     description: "4K resolution touch screen with wireless connectivity and collaboration tools",
     price: 2499,
     category: "Classroom Devices",
+    image: "https://images.unsplash.com/photo-1606761568499-6d2451b23c66?w=400",
     inStock: true,
   },
   {
@@ -21,6 +22,7 @@ const hardwareProducts = [
     description: "Immersive virtual reality headsets and controllers for interactive learning",
     price: 1299,
     category: "Learning Labs",
+    image: "https://images.unsplash.com/photo-1622979135225-d2ba269cf1ac?w=400",
     inStock: true,
   },
   {
@@ -29,6 +31,7 @@ const hardwareProducts = [
     description: "High-performance server infrastructure for campus-wide applications",
     price: 8999,
     category: "IT Infrastructure",
+    image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=400",
     inStock: true,
   },
   {
@@ -37,6 +40,7 @@ const hardwareProducts = [
     description: "Complete biometric and card-based access control for campus security",
     price: 3499,
     category: "Security Systems",
+    image: "https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=400",
     inStock: true,
   },
   {
@@ -45,6 +49,7 @@ const hardwareProducts = [
     description: "Professional-grade 3D printer for STEM education and prototyping",
     price: 1899,
     category: "Learning Labs",
+    image: "https://images.unsplash.com/photo-1605647540924-852290f6b0d5?w=400",
     inStock: true,
   },
   {
@@ -53,6 +58,7 @@ const hardwareProducts = [
     description: "Complete solar panel installation with battery backup for campus buildings",
     price: 12999,
     category: "Power & Backup",
+    image: "https://images.unsplash.com/photo-1509391366360-2e959784a276?w=400",
     inStock: true,
   },
   {
@@ -61,6 +67,7 @@ const hardwareProducts = [
     description: "Ultra HD wireless projector with interactive features",
     price: 1599,
     category: "Classroom Devices",
+    image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400",
     inStock: true,
   },
   {
@@ -69,6 +76,7 @@ const hardwareProducts = [
     description: "16-camera HD surveillance system with network video recorder",
     price: 2899,
     category: "Security Systems",
+    image: "https://images.unsplash.com/photo-1557597774-9d273605dfa9?w=400",
     inStock: true,
   },
 ];

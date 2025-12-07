@@ -7,6 +7,7 @@ const featuredProducts = [
     description: "4K resolution touch screen with wireless connectivity and collaboration tools",
     price: 2499,
     category: "Classroom Devices",
+    image: "https://images.unsplash.com/photo-1606761568499-6d2451b23c66?w=400",
     inStock: true,
   },
   {
@@ -15,6 +16,7 @@ const featuredProducts = [
     description: "Complete solution for admissions, fees, exams, and payroll management",
     price: 4999,
     category: "Admin & Management",
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400",
     inStock: true,
   },
   {
@@ -23,6 +25,7 @@ const featuredProducts = [
     description: "Immersive virtual reality headsets and controllers for interactive learning",
     price: 1299,
     category: "Learning Labs",
+    image: "https://images.unsplash.com/photo-1622979135225-d2ba269cf1ac?w=400",
     inStock: true,
   },
   {
@@ -31,6 +34,7 @@ const featuredProducts = [
     description: "Comprehensive SIS for tracking student records, attendance, and performance",
     price: 3499,
     category: "Student Support",
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400",
     inStock: true,
   },
 ];
