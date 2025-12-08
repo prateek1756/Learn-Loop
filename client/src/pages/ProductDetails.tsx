@@ -16,12 +16,12 @@ export default function ProductDetails() {
   }, [productId]);
 
   const products = {
-    // Home page products
     "1": { 
       id: "1", 
       name: "Smart Interactive Whiteboard", 
       price: 2499, 
       category: "Classroom Devices",
+      image: "https://images.unsplash.com/photo-1606761568499-6d2451b23c66?w=800",
       description: "Transform your classroom with this cutting-edge interactive whiteboard featuring multi-touch capabilities, 4K resolution, and seamless integration with educational software.",
       specifications: {
         "Display Size": "75 inches",
@@ -43,6 +43,7 @@ export default function ProductDetails() {
       name: "Campus Management ERP", 
       price: 4999, 
       category: "Admin & Management",
+      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800",
       description: "Comprehensive enterprise resource planning solution designed specifically for educational institutions to streamline operations and improve efficiency.",
       specifications: {
         "Users": "Unlimited",
@@ -59,12 +60,56 @@ export default function ProductDetails() {
         "Analytics and reporting dashboard"
       ]
     },
-    // Hardware products
+    "3": {
+      id: "3",
+      name: "VR Learning Kit",
+      price: 1299,
+      category: "Learning Labs",
+      image: "https://images.unsplash.com/photo-1622979135225-d2ba269cf1ac?w=800",
+      description: "Immersive virtual reality headsets and controllers for interactive learning experiences.",
+      specifications: {
+        "Headsets": "10 units included",
+        "Resolution": "2160 x 1200 per eye",
+        "Tracking": "6DOF inside-out",
+        "Battery Life": "4-6 hours",
+        "Age Range": "13+ years"
+      },
+      features: [
+        "Educational VR content library",
+        "Classroom management software",
+        "Wireless connectivity",
+        "Adjustable headsets",
+        "Teacher dashboard"
+      ]
+    },
+    "4": {
+      id: "4",
+      name: "Student Information System",
+      price: 3499,
+      category: "Student Support",
+      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800",
+      description: "Comprehensive SIS for tracking student records, attendance, and performance.",
+      specifications: {
+        "Students": "Unlimited records",
+        "Reports": "50+ standard reports",
+        "Integration": "LMS compatible",
+        "Mobile Access": "iOS & Android apps",
+        "Backup": "Automated daily backup"
+      },
+      features: [
+        "Student enrollment management",
+        "Grade tracking and transcripts",
+        "Attendance monitoring",
+        "Parent portal access",
+        "Academic analytics"
+      ]
+    },
     "h1": {
       id: "h1",
       name: "Smart Interactive Whiteboard",
       price: 2499,
       category: "Classroom Devices",
+      image: "https://images.unsplash.com/photo-1606761568499-6d2451b23c66?w=800",
       description: "4K resolution touch screen with wireless connectivity and collaboration tools for modern classrooms.",
       specifications: {
         "Display Size": "75 inches",
@@ -86,6 +131,7 @@ export default function ProductDetails() {
       name: "VR Learning Kit",
       price: 1299,
       category: "Learning Labs",
+      image: "https://images.unsplash.com/photo-1622979135225-d2ba269cf1ac?w=800",
       description: "Immersive virtual reality headsets and controllers for interactive learning experiences.",
       specifications: {
         "Headsets": "10 units included",
@@ -102,12 +148,12 @@ export default function ProductDetails() {
         "Teacher dashboard"
       ]
     },
-    // Software products
     "s1": {
       id: "s1",
       name: "Campus Management ERP",
       price: 4999,
       category: "Admin & Management",
+      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800",
       description: "Complete solution for admissions, fees, exams, and payroll management.",
       specifications: {
         "Users": "Unlimited",
@@ -129,6 +175,7 @@ export default function ProductDetails() {
       name: "Learning Management System",
       price: 3499,
       category: "Teaching & Learning",
+      image: "https://images.unsplash.com/photo-1501504905252-473c47e087f8?w=800",
       description: "Advanced LMS with online classes, quizzes, and content management.",
       specifications: {
         "Students": "Unlimited",
@@ -150,6 +197,7 @@ export default function ProductDetails() {
       name: "Enterprise Server Rack",
       price: 8999,
       category: "IT Infrastructure",
+      image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800",
       description: "High-performance server infrastructure for campus-wide applications.",
       specifications: {
         "CPU": "Intel Xeon processors",
@@ -171,6 +219,7 @@ export default function ProductDetails() {
       name: "RFID Access Control System",
       price: 3499,
       category: "Security Systems",
+      image: "https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=800",
       description: "Complete biometric and card-based access control for campus security.",
       specifications: {
         "Readers": "20 RFID readers",
@@ -192,6 +241,7 @@ export default function ProductDetails() {
       name: "3D Printer Pro",
       price: 1899,
       category: "Learning Labs",
+      image: "https://images.unsplash.com/photo-1605647540924-852290f6b0d5?w=800",
       description: "Professional-grade 3D printer for STEM education and prototyping.",
       specifications: {
         "Build Volume": "300x300x400mm",
@@ -213,6 +263,7 @@ export default function ProductDetails() {
       name: "Solar Power System",
       price: 12999,
       category: "Power & Backup",
+      image: "https://images.unsplash.com/photo-1509391366360-2e959784a276?w=800",
       description: "Complete solar panel installation with battery backup for campus buildings.",
       specifications: {
         "Capacity": "50kW system",
@@ -234,6 +285,7 @@ export default function ProductDetails() {
       name: "Smart Projector 4K",
       price: 1599,
       category: "Classroom Devices",
+      image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800",
       description: "Ultra HD wireless projector with interactive features.",
       specifications: {
         "Resolution": "4K UHD (3840x2160)",
@@ -255,6 +307,7 @@ export default function ProductDetails() {
       name: "CCTV Security Package",
       price: 2899,
       category: "Security Systems",
+      image: "https://images.unsplash.com/photo-1557597774-9d273605dfa9?w=800",
       description: "16-camera HD surveillance system with network video recorder.",
       specifications: {
         "Cameras": "16 x 1080p HD cameras",
@@ -276,6 +329,7 @@ export default function ProductDetails() {
       name: "Student Information System",
       price: 3499,
       category: "Student Support",
+      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800",
       description: "Comprehensive SIS for tracking student records and performance.",
       specifications: {
         "Students": "Unlimited records",
@@ -297,6 +351,7 @@ export default function ProductDetails() {
       name: "HR & Payroll Software",
       price: 2999,
       category: "Faculty & Staff",
+      image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800",
       description: "Streamlined HR management and automated payroll processing.",
       specifications: {
         "Employees": "Unlimited records",
@@ -318,6 +373,7 @@ export default function ProductDetails() {
       name: "Virtual Lab Platform",
       price: 2499,
       category: "Teaching & Learning",
+      image: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=800",
       description: "Interactive virtual labs for science and engineering courses.",
       specifications: {
         "Simulations": "500+ lab experiments",
@@ -339,6 +395,7 @@ export default function ProductDetails() {
       name: "Library Management System",
       price: 1999,
       category: "Campus Management",
+      image: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=800",
       description: "Digital cataloging, circulation, and resource management.",
       specifications: {
         "Books": "Unlimited catalog",
@@ -393,11 +450,21 @@ export default function ProductDetails() {
 
       <div className="grid lg:grid-cols-2 gap-12 animate-fade-in-up" style={{animationDelay: '0.2s'}}>
         <div>
-          <div className="aspect-square bg-muted rounded-lg flex items-center justify-center mb-6">
-            <div className="text-center text-muted-foreground">
-              <div className="text-6xl mb-4">📱</div>
-              <p>Product Image</p>
-            </div>
+          <div className="aspect-square bg-muted rounded-lg overflow-hidden mb-6">
+            {product.image ? (
+              <img 
+                src={product.image} 
+                alt={product.name}
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <div className="w-full h-full flex items-center justify-center text-center text-muted-foreground">
+                <div>
+                  <div className="text-6xl mb-4">📱</div>
+                  <p>Product Image</p>
+                </div>
+              </div>
+            )}
           </div>
         </div>
 

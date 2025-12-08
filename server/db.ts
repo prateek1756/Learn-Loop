@@ -7,11 +7,12 @@ neonConfig.webSocketConstructor = ws;
 
 const databaseUrl = process.env.DATABASE_URL || '';
 
-if (!databaseUrl && process.env.NODE_ENV !== 'test') {
-  throw new Error(
-    "DATABASE_URL must be set. Did you forget to provision a database?",
-  );
+let pool: Pool | null = null;
+let db: any = null;
+
+if (databaseUrl) {
+  pool = new Pool({ connectionString: databaseUrl });
+  db = drizzle({ client: pool, schema });
 }
 
-export const pool = new Pool({ connectionString: databaseUrl });
-export const db = drizzle({ client: pool, schema });
+export { pool, db };

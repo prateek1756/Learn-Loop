@@ -260,7 +260,7 @@ export default function BookConsultation() {
                 Call Now: +91 98765 43210
               </Button>
               <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-green-600">
-                Email: consult@edutechstore.com
+                Email: consult@learnloopstore.com
               </Button>
             </div>
           </div>

@@ -1,10 +1,7 @@
 import HardwareCategories from "@/components/HardwareCategories";
 import ProductCard from "@/components/ProductCard";
-import { useAuth } from "@/hooks/useAuth";
 import { useLocation } from "wouter";
 import { useCart } from "@/contexts/CartContext";
-import { useState } from "react";
-import AuthDialog from "@/components/AuthDialog";
 
 const hardwareProducts = [
   {
@@ -83,16 +80,9 @@ const hardwareProducts = [
 
 export default function Hardware() {
   const [, setLocation] = useLocation();
-  const { isAuthenticated } = useAuth();
-  const [authDialogOpen, setAuthDialogOpen] = useState(false);
   const { addToCart } = useCart();
 
   const handleAddToCart = (productId: string) => {
-    if (!isAuthenticated) {
-      setAuthDialogOpen(true);
-      return;
-    }
-
     const product = hardwareProducts.find(p => p.id === productId);
     if (product) {
       addToCart(product);
@@ -143,11 +133,6 @@ export default function Hardware() {
           </div>
         </div>
       </section>
-
-      <AuthDialog
-        isOpen={authDialogOpen}
-        onClose={() => setAuthDialogOpen(false)}
-      />
     </>
   );
 }

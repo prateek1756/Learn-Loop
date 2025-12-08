@@ -40,8 +40,8 @@ const featuredProducts = [
 ];
 
 interface FeaturedProductsProps {
-  onAddToCart?: (id: string) => void;
-  onViewDetails?: (id: string) => void;
+  onAddToCart: (id: string) => void;
+  onViewDetails: (id: string) => void;
 }
 
 export default function FeaturedProducts({ onAddToCart, onViewDetails }: FeaturedProductsProps) {
@@ -62,8 +62,8 @@ export default function FeaturedProducts({ onAddToCart, onViewDetails }: Feature
             <ProductCard
               key={product.id}
               {...product}
-              onAddToCart={onAddToCart}
-              onViewDetails={onViewDetails}
+              onAddToCart={() => onAddToCart(product.id)}
+              onViewDetails={() => onViewDetails(product.id)}
             />
           ))}
         </div>

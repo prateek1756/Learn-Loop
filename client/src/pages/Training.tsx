@@ -613,7 +613,7 @@ export default function Training() {
                 <CardHeader>
                   <CardTitle className="text-green-800 flex items-center gap-2">
                     <CheckCircle className="h-5 w-5" />
-                    EduTech Store Training
+                    LearnLoop Store Training
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">

@@ -12,7 +12,7 @@ export default function Documentation() {
             <div className="text-center mb-12">
               <h1 className="text-4xl font-bold mb-4">Documentation</h1>
               <p className="text-xl text-muted-foreground">
-                Everything you need to know about using EduTech Store effectively
+                Everything you need to know about using LearnLoop Store effectively
               </p>
             </div>
             

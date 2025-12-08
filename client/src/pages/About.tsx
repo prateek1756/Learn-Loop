@@ -13,7 +13,7 @@ export default function About() {
           <div className="max-w-6xl mx-auto px-6 text-center">
             <Badge variant="outline" className="mb-4">Established 2020</Badge>
             <h1 className="text-5xl font-bold mb-6 bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
-              About EduTech Store
+              About LearnLoop Store
             </h1>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
               Transforming education through innovative technology solutions that empower institutions to create exceptional learning experiences
@@ -130,7 +130,7 @@ export default function About() {
           <div className="max-w-4xl mx-auto px-6 text-center text-primary-foreground">
             <h2 className="text-3xl font-bold mb-4">Ready to Transform Your Institution?</h2>
             <p className="text-xl mb-8 opacity-90">
-              Join hundreds of educational institutions that trust EduTech Store for their technology needs
+              Join hundreds of educational institutions that trust LearnLoop Store for their technology needs
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button size="lg" variant="secondary">

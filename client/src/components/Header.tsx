@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { GraduationCap, ShoppingCart, Search, Menu, X } from "lucide-react";
+import { GraduationCap, ShoppingCart, Search, Menu, X, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useLocation } from "wouter";
@@ -95,7 +95,7 @@ export default function Header({ cartCount, onCartClick, onSearchChange }: Heade
           {/* Logo */}
           <div className="flex items-center gap-2 cursor-pointer" onClick={() => setLocation("/")}>
             <GraduationCap className="h-8 w-8 text-primary" />
-            <span className="text-xl font-bold">EduTech Store</span>
+            <span className="text-xl font-bold">LearnLoop Store</span>
           </div>
 
           {/* Desktop Navigation */}
@@ -140,8 +140,15 @@ export default function Header({ cartCount, onCartClick, onSearchChange }: Heade
             </div>
           </div>
 
-          {/* Cart and Mobile Menu */}
+          {/* Cart, Auth and Mobile Menu */}
           <div className="flex items-center space-x-4">
+            <Button
+              size="sm"
+              onClick={() => setLocation("/login")}
+              className="hidden md:inline-flex"
+            >
+              Login / Sign Up
+            </Button>
             <Button
               variant="outline"
               size="sm"
@@ -195,6 +202,16 @@ export default function Header({ cartCount, onCartClick, onSearchChange }: Heade
                   {item.name}
                 </button>
               ))}
+              <Button
+                size="sm"
+                onClick={() => {
+                  setLocation("/login");
+                  setIsMenuOpen(false);
+                }}
+                className="w-full mt-2"
+              >
+                Login / Sign Up
+              </Button>
             </div>
           </div>
         )}

@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+
 import { GraduationCap, ArrowLeft, Eye, EyeOff } from "lucide-react";
 
 export default function Signup() {
@@ -15,150 +15,50 @@ export default function Signup() {
     lastName: "",
     email: "",
     institution: "",
-    role: "",
-    // Role-specific fields
-    studentId: "",
-    grade: "",
-    employeeId: "",
-    department: "",
-    companyName: "",
-    businessType: "",
     password: "",
     confirmPassword: ""
   });
 
-  const renderRoleSpecificFields = () => {
-    switch (formData.role) {
-      case "student":
-        return (
-          <>
-            <div className="space-y-2">
-              <Label htmlFor="studentId">Student ID</Label>
-              <Input
-                id="studentId"
-                placeholder="Enter student ID"
-                value={formData.studentId}
-                onChange={(e) => setFormData({...formData, studentId: e.target.value})}
-                required
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="grade">Grade/Year</Label>
-              <Input
-                id="grade"
-                placeholder="e.g., 10th Grade, 2nd Year"
-                value={formData.grade}
-                onChange={(e) => setFormData({...formData, grade: e.target.value})}
-                required
-              />
-            </div>
-          </>
-        );
-      case "teacher":
-        return (
-          <>
-            <div className="space-y-2">
-              <Label htmlFor="employeeId">Employee ID</Label>
-              <Input
-                id="employeeId"
-                placeholder="Enter employee ID"
-                value={formData.employeeId}
-                onChange={(e) => setFormData({...formData, employeeId: e.target.value})}
-                required
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="department">Department</Label>
-              <Input
-                id="department"
-                placeholder="e.g., Mathematics, Science"
-                value={formData.department}
-                onChange={(e) => setFormData({...formData, department: e.target.value})}
-                required
-              />
-            </div>
-          </>
-        );
-      case "developer":
-        return (
-          <>
-            <div className="space-y-2">
-              <Label htmlFor="companyName">Company Name</Label>
-              <Input
-                id="companyName"
-                placeholder="Enter company name"
-                value={formData.companyName}
-                onChange={(e) => setFormData({...formData, companyName: e.target.value})}
-                required
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="department">Specialization</Label>
-              <Input
-                id="department"
-                placeholder="e.g., EdTech, Mobile Apps"
-                value={formData.department}
-                onChange={(e) => setFormData({...formData, department: e.target.value})}
-                required
-              />
-            </div>
-          </>
-        );
-      case "customer":
-        return (
-          <div className="space-y-2">
-            <Label htmlFor="businessType">Organization Type</Label>
-            <Select value={formData.businessType} onValueChange={(value) => setFormData({...formData, businessType: value})}>
-              <SelectTrigger>
-                <SelectValue placeholder="Select organization type" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="school">School</SelectItem>
-                <SelectItem value="college">College</SelectItem>
-                <SelectItem value="university">University</SelectItem>
-                <SelectItem value="training-center">Training Center</SelectItem>
-                <SelectItem value="corporate">Corporate</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        );
-      case "distributor":
-        return (
-          <>
-            <div className="space-y-2">
-              <Label htmlFor="companyName">Company Name</Label>
-              <Input
-                id="companyName"
-                placeholder="Enter distributor company name"
-                value={formData.companyName}
-                onChange={(e) => setFormData({...formData, companyName: e.target.value})}
-                required
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="businessType">Distribution Area</Label>
-              <Input
-                id="businessType"
-                placeholder="e.g., North India, Maharashtra"
-                value={formData.businessType}
-                onChange={(e) => setFormData({...formData, businessType: e.target.value})}
-                required
-              />
-            </div>
-          </>
-        );
-      default:
-        return null;
-    }
-  };
+  const [, setLocation] = useLocation();
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError("");
+    
     if (formData.password !== formData.confirmPassword) {
-      alert("Passwords don't match!");
+      setError("Passwords don't match!");
       return;
     }
-    console.log("Signup attempt:", formData);
+    
+    setLoading(true);
+    
+    try {
+      const response = await fetch('/api/auth/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password,
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          institution: formData.institution,
+        }),
+      });
+      
+      const data = await response.json();
+      
+      if (response.ok) {
+        setLocation('/login');
+      } else {
+        setError(data.message || 'Signup failed');
+      }
+    } catch (err) {
+      setError('Network error. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -179,10 +79,16 @@ export default function Signup() {
               </div>
             </div>
             <CardTitle className="text-2xl">Create Account</CardTitle>
-            <p className="text-muted-foreground">Join EduTech Store today</p>
+            <p className="text-muted-foreground">Join LearnLoop Store today</p>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
+              {error && (
+                <div className="p-3 text-sm text-red-600 bg-red-50 border border-red-200 rounded">
+                  {error}
+                </div>
+              )}
+              
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="firstName">First Name</Label>
@@ -228,24 +134,6 @@ export default function Signup() {
                   required
                 />
               </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="role">Role</Label>
-                <Select value={formData.role} onValueChange={(value) => setFormData({...formData, role: value})}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select your role" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="teacher">Teacher</SelectItem>
-                    <SelectItem value="student">Student</SelectItem>
-                    <SelectItem value="developer">Developer</SelectItem>
-                    <SelectItem value="customer">Customer</SelectItem>
-                    <SelectItem value="distributor">Distributor</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {renderRoleSpecificFields()}
               
               <div className="space-y-2">
                 <Label htmlFor="password">Password</Label>
@@ -293,8 +181,8 @@ export default function Signup() {
                 </div>
               </div>
 
-              <Button type="submit" className="w-full">
-                Create Account
+              <Button type="submit" className="w-full" disabled={loading}>
+                {loading ? 'Creating Account...' : 'Create Account'}
               </Button>
             </form>
 

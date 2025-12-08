@@ -8,7 +8,7 @@ export default function Footer() {
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center gap-2 mb-4">
               <GraduationCap className="h-8 w-8 text-primary" />
-              <span className="text-xl font-bold">EduTech Store</span>
+              <span className="text-xl font-bold">LearnLoop Store</span>
             </div>
             <p className="text-muted-foreground text-sm max-w-md">
               Your trusted partner for comprehensive educational technology solutions. 
@@ -38,7 +38,7 @@ export default function Footer() {
         </div>
 
         <div className="border-t mt-8 pt-8 text-center text-sm text-muted-foreground">
-          <p>&copy; 2025 EduTech Store. All rights reserved.</p>
+          <p>&copy; 2025 LearnLoop Store. All rights reserved.</p>
         </div>
       </div>
     </footer>
